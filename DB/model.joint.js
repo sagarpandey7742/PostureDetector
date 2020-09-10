@@ -56,4 +56,4 @@ const joint = new mongoose.Schema({
     }
 });
 
-module.exports = Joint = mongoose.model('joint',joint);
+module.exports = mongoose.model('joint',joint);
