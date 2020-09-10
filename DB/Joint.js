@@ -1,0 +1,59 @@
+const mongoose = require('mongoose');
+const joint = new mongoose.Schema({
+    testName:{
+        type:String
+    },
+    nose:{
+        type:Number
+    },
+    leftEye:{
+        type:Number
+    },
+    rightEye:{
+        type:Number
+    },
+    leftEar:{
+        type:Number
+    },
+    rightEar:{
+        type:Number
+    },
+    leftShoulder:{
+        type:Number
+    },
+    rightShoulder:{
+        type:Number
+    },
+    leftElbow:{
+        type:Number
+    },
+    rightElbow:{
+        type:Number
+    },
+    leftWrist:{
+        type:Number
+    },
+    rightWrist:{
+        type:Number
+    },
+    leftHip:{
+        type:Number
+    },
+    rightHip:{
+        type:Number
+    },
+    leftKnee:{
+        type:Number
+    },
+    rightKnee:{
+        type:Number
+    },
+    leftAnkle:{
+        type:Number
+    },
+    rightAnkle:{
+        type:Number
+    }
+});
+
+module.exports = Joint = mongoose.model('joint',joint);
