@@ -1,12 +1,11 @@
 const express = require("express");
 const app = express();
+var bodyParser = require("body-parser");
 const connectDB = require("./DB/Connection");
 connectDB();
 
 const routes = require("./routes/api.routes");
-
-app.set("view engine", "ejs");
-app.use(express.json({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/api", routes);
 
 app.use(express.static("public"));

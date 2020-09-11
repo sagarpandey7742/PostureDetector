@@ -2,7 +2,6 @@ let video;
 let poseNet;
 let pose;
 let skeleton;
-
 function setup() {
   createCanvas(640, 480);
   video = createCapture(VIDEO);
@@ -36,7 +35,6 @@ function draw() {
     fill(0, 0, 255);
     ellipse(pose.rightWrist.x, pose.rightWrist.y, 32);
     ellipse(pose.leftWrist.x, pose.leftWrist.y, 32);
-	console.log(pose);
 
     for (let i = 0; i < pose.keypoints.length; i++) {
       let x = pose.keypoints[i].position.x;

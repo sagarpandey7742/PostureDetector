@@ -1,28 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
     <script src="https://cdn.jsdelivr.net/npm/p5@1.1.4/lib/p5.min.js"></script>
     <script src="https://unpkg.com/ml5@0.4.2/dist/ml5.min.js"></script>
     <meta charset="utf-8" />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
 
     <title>Posture Detection</title>
   </head>
 
-
   <body>
-    <div><h1 class="display-4 p-4 d-flex justify-content-around bg-gradient-primary text-white font-weight-bold" style="background-color:#35a9ec;">Posture Detection</h1></div>
-    <div >
-      <div style="float: left; width: 41vw;" class="mr-5 ml-5">
+    <div>
+      <h1
+        class="display-4 p-4 d-flex justify-content-around bg-gradient-primary text-white font-weight-bold"
+        style="background-color: #35a9ec"
+      >
+        Posture Detection
+      </h1>
+    </div>
+    <div>
+      <div style="float: left; width: 41vw" class="mr-5 ml-5">
+        <a href="/AddTest.html">
+          <button class="btn btn-dark">Add New Test</button>
+        </a>
         <div class="mt-5 mr-2">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <label class="input-group-text" for="inputGroupSelect01">Test Name</label>
+              <label class="input-group-text" for="inputGroupSelect01"
+                >Test Name</label
+              >
             </div>
             <select class="custom-select" id="inputGroupSelect01">
               <option selected></option>
@@ -32,18 +51,64 @@
             </select>
           </div>
         </div>
-        <div class="mt-5"style="text-align: center">
-          <button type="button" class="btn btn-primary">Detect Pose</button>
+        <div class="mt-5" style="text-align: center">
+          <button type="button" class="btn btn-primary" onclick="verify()">
+            Verify Pose
+          </button>
+          <div id="result" class="m-5"></div>
         </div>
       </div>
-      <div style="float: right; background-color: floralwhite;" class="mt-2"><script src="sketch.js"></script></div> 
+      <div style="float: right; background-color: floralwhite" class="mt-2">
+        <script src="sketch.js"></script>
+      </div>
     </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script>
+      const data = {};
+      function getState() {
+        return Math.ceil(Math.random()*100);
+      }
+    </script>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      function verify() {
+        const request = new XMLHttpRequest();
+        const x=getState();
+        request.open("POST", "/api/check");
+        request.onreadystatechange = function () {
+          if (this.readyState === 4 && this.status === 200) {
+            console.log(x);
+            if (x % 2 != 0) {
+              document.getElementById("result").innerHTML = `
+            <span class="badge badge-success">OK</span>
+            `;
+            } else {
+              document.getElementById("result").innerHTML = `
+            <span class="badge badge-danger">Correct your posture</span>
+            `;
+            }
+          }
+        };
+
+        request.send(data);
+      }
+    </script>
   </body>
 </html>
-
